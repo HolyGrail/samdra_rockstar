@@ -59,30 +59,32 @@
     <label for="toggle"><input type="checkbox" name="toggle" id="toggle"/>切り替え</label>
     <div id="map">
       <div id="map_html">
-        <a href="#" data-point="-644,602">とらきち</a>
-        <a href="#" data-point="-600,686">ほりたん</a>
-        <a href="#" data-point="-162,140">月宮</a>
-        <a href="#" data-point="-502,638">mashiro</a>
-        <a href="#" data-point="-587,584">まかま</a>
-        <a href="#" data-point="90,-192">ukstudio</a>
-        <a href="#" data-point="-586,686">とてながし</a>
-        <a href="#" data-point="-538,637">で</a>
-        <a href="#" data-point="-662,704">ゴワス</a>
-        <a href="#" data-point="-680,520">結</a>
         <div id="map_line">　</div>
       </div>
     </div>
     <script type="text/javascript">
+      var user_list = {
+        "とらきち"   : [-644, 602],
+        "ほりたん"   : [-600, 686],
+        "月宮"       : [-162, 140],
+        "mashiro"    : [-502, 638],
+        "まかま"     : [-587, 584],
+        "ukstudio"   : [  90,-192],
+        "とてながし" : [-586, 686],
+        "で"         : [-538, 637],
+        "ゴワス"     : [-662, 704],
+        "結"         : [-680, 520]
+      };
+      $.each(user_list, function(k,v){
+        $('#map_html').append($('<a />').css("top", v[0]).css("left", v[1]*-1).data('x', v[0]).data('y', v[1]).text(k))
+      });
       $("a", "#map_html").each(function(){
-        var point = $(this).attr('data-point').split(',');
-        point[1] = (point[1] < 0) ? parseInt(point[1]) * -1 : point[1] * -1;
-        $(this).css("top",point[0]+"px").css("left",point[1]+"px");
         $(this).hover(
           function(e){
             $("#map_html").append(
               $('<div />')
                 .addClass('hover')
-                .text($(this).text() + "(" + $(this).attr('data-point') + ")")
+                .text($(this).text() + "(" + $(this).data('x') + ","+$(this).data('y')+")")
                 .css('top',  $(this).position()['top']-20)
                 .css('left', $(this).position()['left']+10)
               );
